@@ -1,2 +1,9 @@
 # Linux
-notes for Linux learning in HaiZei Tech teched by Suyelu
+#### delete.sh
+- 自定义的安全删除脚本
+#### find.sh
+- 寻找某目录下所有文件内容中的最长字符串并输出
+#### find_num.sh
+- 计算某目录下所有目录及文件的个数
+#### auto_back.sh
+- 自动备份项目的源文件
