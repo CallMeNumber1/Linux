@@ -303,4 +303,32 @@ chgrp root file
 bash.bashsrc
 
 #### date 查看当前时间
-date +"%..." 以什么格式输出
+- date +"%..." 以什么格式输出
+- `date +"%Y-%m-%d %H:%M:%S"`
+- `date -d=`显示指定字符串所描述的时间
+- `date -%s`显示绝对秒数
+- 计算时间差
+
+```bash
+#将两个时间都转成秒然后相减
+#已知starttime endtime
+start_seconds=$(date --date="$starttime" %s)
+end_seconds=$(date --date="$end_seconds" %s)
+diff=$((end_seconds-start_seconds))
+((h=diff/60))
+((m=diff%60))
+```
+
+
+
+#### $
+
+- $()相当于命令替换符
+- $[]用来数值计算
+- ${}引用变量
+- $? 为0代表上一条命令执行成功
+
+#### 字符串拼接
+
+- `PATH="$PATH:/home/chongh"`
+

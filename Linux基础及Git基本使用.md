@@ -1,3 +1,26 @@
+## 基本操作
+
+- 关机命令
+
+```bash
+halt
+poweroff
+shutdown -h now (root)
+
+重启命令
+reboot
+shutdown -r  now (root)
+```
+
+- 查找软件的安装位置
+
+```bash
+which
+whereis 
+```
+
+
+
 ## 软件安装
 
 - 源 ubantu官方的copy
@@ -89,6 +112,105 @@
 - 进入树莓派：`ssh ChongH@192.168.1.40` 
 
   密码:`haizei`
+
+  
+
+- dirname basename 对字符串的处理, 不管路径存不存在
+
+## 文件内容的查阅
+
+- cat正向连续读
+  - -n 列出行号, 空行也编号
+
+- nl输出行号显示文件
+
+  -b 行号指定的方式
+
+  ​	-b a 相当于cat -a 空行也编号
+
+  ​	-b t  相当于cat -b
+
+  -n 列出行号的表示方法
+
+  ​	-n ln 行号在屏幕最左边显示
+
+  ​	-n rn
+
+  ​	-n rz 行号在自己字段的最右边显示, 前面自动补0
+
+  -w \<num\> 行号所占位数
+
+- tac反向连续读(按行)
+
+- head tail 只看头几行/末尾几行 -f 强制读(每次更新都会读出来)
+
+  head -10 读前10行
+
+- more(按页查询) less(可以上下翻页, 且高亮显示)
+
+#### 课堂练习
+
+```bash
+#列出man手册的101~120行,行号占8位
+man ls | nl -w 8 -n rz -b a | head -120 |tail 20
+```
+
+## 修改文件时间与新建文件
+
+- mtime
+- ctime
+- atime
+- touch 可以用来修改文件时间
+  - 
+
+#### 文件的隐藏属性
+
+- chattr
+- lsattr
+
+#### 文件的特殊权限
+
+- set_uid 可作用于二进制程序文件
+
+   chmd u+s
+
+- set_gid 可以作用于目录和二进制程序文件 
+
+  - 用户在设置了该权限的目录里, 有效组变为目录所属组
+  - 在此组下所有用户新建的文件所属的用户组均为目录所属组
+
+  chmod g+s
+
+- sticky Bit 作用于目录
+
+  - 在该目录下, 用户只能删除自己创建的内容.
+
+  chmod o+t
+
+#### 课堂作业
+
+```bash
+#新建一个群组TestGroup
+groupadd TestGroup
+#在自己的系统中新建两个用户userA和userB
+user add -G TestGroup userA
+user add -G TestGroup userB
+#假设现在有一个项目需要A,B两位用户同时对项目有读写权限,使用root用户创建一个项目目录,实现A,B两位用户都能读写新建文件.并且A,B新建的文件可以被彼此读写,A,B只能删除自己创建的内容.
+使用root用户实现.
+#创建目录
+mkdir /project 
+#修改所有组为TestGroup
+chgrp TestGroup /project
+#给TestGroup组可以写权限
+chmod g+x /project
+#给project目录授权set_gid属性,使得userA,userB在目录下创建的文件均属于组TestGroup.
+chmod g+s /project
+这一步实现了A,B对彼此创建的文件的相互修改.
+#给project目录授权sticky Bit属性,使得目录成员只能删除自己创建的文件.
+chmod o+t /project
+```
+
+
 
 ## 免密登录
 
