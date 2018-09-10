@@ -17,6 +17,20 @@ strchr() 返回要查找的字符在字符串中第一次出现的位置, 返回
 
 #### C++ STL
 
+- 队列
+
+```c
+// 初始化
+#include <queue>
+queue<int>que;
+// 成员函数
+q.empty()判空
+q.pop()删除第一个元素
+q.front()返回第一个元素
+q.push()在末尾添加一个元素
+q.size()返回队列中元素的个数
+```
+
 - 优先队列 `#include<queue> using namespace std`
 
 ```c
