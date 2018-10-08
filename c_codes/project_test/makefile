@@ -1,0 +1,20 @@
+CC = gcc
+CFLAGS = -std=c11 -DTEST_FUNC -Wall -g
+.PHONY: clean
+
+a.out : main.o is_prime.o add.o
+	$(CC) $(CFLAGS) main.o is_prime.o add.o thirdpart/libs/libtest.a
+
+main.o : main.c
+	$(CC) -c $(CFLAGS) main.c
+
+is_prime.o : is_prime.c is_prime.h
+	$(CC) -c $(CFLAGS) is_prime.c
+
+add.o : add.c add.h
+	$(CC) -c $(CFLAGS) add.c
+
+test.o : test.c test.h
+	$(CC) -c $(CFLAGS) test.c
+clean : 
+	rm -rf *.o a.out
