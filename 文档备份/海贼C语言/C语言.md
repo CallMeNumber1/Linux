@@ -139,12 +139,9 @@ va_end(arg)
 
 #### 大端小端
 
-小端系统,低位存在低地址位
-
-内存,地址
-
 - 小端系统
   - 存储时从低地址向高地址存,读取时从高地址往低地址读
+  - 低位存在低地址位
 
 - 数据类型只是程序看待内存的一种方式
 
@@ -177,6 +174,10 @@ __FILE__
 ```
 
 g++ -E a.cpp > output.cpp 预处理后的文件,编译源码.
+
+- 宏定义中#与##的区别
+  - #变成字符串
+  - ##连接
 
 ![宏定义与函数区别](/home/chongh/下载/宏定义与函数区别.png)
 
@@ -307,15 +308,60 @@ argv[1]里面存第一个参数
 
 ## 简易测试框架
 
-EXPECT()比较两个值:返回值和期望值 测试点
+#### 编写测试框架(测试人员)
 
-TEST 测试用例
+- `TEST(test, function)`是一个测试用例
+- `EXPECT()`是测试用例中的一个测试点
+  - 比较两个值,函数实际返回值和期望值		
 
-一个测试点通不过则整个用例都通不过		
+- `RUN_ALL_TEST()`运行所有测试用例
 
-输出逻辑在RUN_ALL_TEST
+```c
+#define P(func) { \
+    printf("%s = %d\n", #func, func); \
+}
+```
 
-total和expect_cnt的值一样即可
+- 多重定义错误,在两个.o文件链接过程中出错
+  - 因此.h文件里只能放声明,定义放在.c里.
+  - 凡是发生链接错误,都要make clean再重新编译.
+  - static类型变量只在原文件中可以访问,而跨源文件不能访问.
+- 解决多重定义问题
+  - 在.h文件里仅仅存放声明,定义都放在.c文件.
+  - extern 可以将全局变量的声明和定义分开.
+- 提供自己写好的测试框架
+
+```makefile
+提供一个工程目录的zip文件供使用者下载.
+例如本框架的使用方式:
+testcase即为测试框架的目录
+其中包含include(存放test.h),src(存放test.c),output三个子目录和一份makefile文件
+运行make和make install,根据.c和.h文件生成对应的动态/静态链接库.
+其中输出的内容存放在output/include和output/libs
+
+开发人员在自己的项目目录下新建thirdpart目录,用来存放所有外部文件
+将output目录下所有文件拷贝到thirdpart下
+然后改变makefile,在链接产生a.out的文件后面加上thirdpart/libs/libtest.a
+
+之后,即可编写测试用例,testcase.h,愉快的使用测试框架.
+```
+
+附录:运用测试框架时使用链接库而非.c和.h文件的好处
+
+	当测试框架中的.c文件特别多时,将带来很大方便
+
+#### 使用测试框架(开发人员)
+
+测试框架不应该对原工程代码产生污染(想用就用)
+
+- .so动态链接库  编译: -shared
+- .a静态链接库 编译: -static
+
+INCLUDES用来增加查找路径
+
+- 开发人员通过头文件和静态链接库来用测试框架
+  - 静态链接库存放的就是所要使用的函数定义.
+  - 而.h文件中存放的是声明,用来告诉程序有某些函数的存在.
 
 # 作业
 
@@ -357,13 +403,43 @@ char *strstr(char *str, char *substr)
 
 #### C语言工程开发
 
-`gcc -c只编译不链接`
+`gcc -c只编译不链接,产生目标文件.o`
 
 - makefile 
+
   - 当写的工程文件特别多时要用makefile
   - make命令自动寻找当前目录下的makefile文件去执行
   - make clean,没有任何依赖性,删除.o和.out文件
     - 开头要写上.PHONY: clean 使得clean变为虚拟(防止存在clean文件时报错)
+
+- 写法示范
+
+  `目标文件 : 所依赖的文件`
+
+  `tab+编译命令`
+
+```makefile
+CC = gcc
+CFLAGS = -std=c11 -Wall -g
+.PHONY: clean
+
+a.out : main.o is_prime.o add.o test.o
+	$(CC) $(CFLAGS) main.o is_prime.o add.o test.o
+
+main.o : main.c
+	$(CC) -c $(CFLAGS) main.c
+
+is_prime.o : is_prime.c is_prime.h
+	$(CC) -c $(CFLAGS) is_prime.c
+
+add.o : add.c add.h
+	$(CC) -c $(CFLAGS) add.c
+
+test.o : test.c test.h
+	$(CC) -c $(CFLAGS) test.c
+clean : 
+	rm -rf *.o a.out
+```
 
 
 
