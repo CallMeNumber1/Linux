@@ -6,6 +6,7 @@
  ************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct Node {
     int data;
@@ -18,12 +19,16 @@ typedef struct List {
 } List;
 
 int main() {
-    int n;
-    List *l = (List *l)malloc(sizeof(List));
-    
+    int n, num;
+    List *l = (List *)malloc(sizeof(List));
+    l->length = 0;
+    l->head.next = NULL;
     scanf("%d", &n);
     for (int i = 0; i < n; i++) {
-            
+        scanf("%d", &num);
+        Node *p = (Node *)malloc(sizeof(Node));
+        p->data = num;
+        p->next = 
     }
 
 
