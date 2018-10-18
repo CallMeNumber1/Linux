@@ -85,6 +85,6 @@ source .back.rc
   压缩 gzip bzip xz
 
   将所有.png的文件打包并压缩成一个名为allpic.tar.gz文件
-  tar -czf allpic.tar.gz *.png
+  `tar -czf allpic.tar.gz *.png`
 
 - `tail -f（强制）/var/log/mylog.log` 追踪日志文件的变化。
