@@ -43,3 +43,5 @@
   -d "string" 显示字符串所指日期
 
 - cal 显示日历
+
+#### BIOS用来硬件检测,引导系统由Boot loader做

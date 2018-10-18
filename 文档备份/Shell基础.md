@@ -18,7 +18,7 @@
 
   ``命令替换符
 
-  ​	`pwd` 代替命令的输出
+  	`pwd` 代替命令的输出
 
   `a = $a:a`字符串拼接，$后面跟变量名
 
@@ -52,9 +52,9 @@
 
   `echo string`
 
-  ​	-e 开启转义
-
-  ​	-n 不输出回车
+  	-e 开启转义
+  	
+  	-n 不输出回车
 
   `printf format-string [arguments]`
 
@@ -106,8 +106,6 @@
   	#statements
   done
   ```
-
-  
 
 - 数组
 
@@ -172,7 +170,11 @@
 
   -f 当文件为空时不输出错误信息
 
-  -rf 
+  -rf
+
+#### 调试
+
+- `set -x`开启脚本的debug模式,后面用`set +x`关闭
 
 #### 定时任务
 
@@ -184,11 +186,11 @@
 
   -options 选项参数
 
-  ​	-name 按照文件名查找文件
-
-  ​	-mtime -n +n 按照文件的更改时间来查找文件，+n表示n天前
-
-  ​	-type 查找某一类型的文件
+  	-name 按照文件名查找文件
+  	
+  	-mtime -n +n 按照文件的更改时间来查找文件，+n表示n天前
+  	
+  	-type 查找某一类型的文件
 
   找两种类型的文件 -type 
 
@@ -201,6 +203,8 @@
   -r [UserName]: 删除目前的时程表
   -l [UserName]: 列出目前的时程表
   -v [UserName]:列出用户cron作业的状态	
+
+
 
 #### 作业一
 
@@ -237,6 +241,7 @@ chown -R wuyelu:haizei directory
 chown suyelu file
 chgrp修改文件所属的组
 chgrp root file
+
 - sudo 临时获取管理员权限
 - su 切换用户
 - sudo -i切换到root
@@ -331,4 +336,5 @@ diff=$((end_seconds-start_seconds))
 #### 字符串拼接
 
 - `PATH="$PATH:/home/chongh"`
+- **${#a}可用来获取字符串a的长度**
 
