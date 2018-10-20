@@ -180,6 +180,10 @@ rm \\*
 
 - `cat /etc/passwd` 显示所有的用户和组信息
 
+- sed 分隔符可以用任意特殊字符
+
+  - ``
+
 #### 数据提取练习题
 
 1.for i in   \`echo "1 2 3 4 5 s 你好 6 7 9 a 8" | tr -c -s "0-9" " " \`; do $[sum+=$i] echo $sum done
