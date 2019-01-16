@@ -12,6 +12,17 @@
 #### scanf函数
 
 - 返回值:成功读入的参数个数
+- 读入含有空格的字符串
+
+```c
+scanf("%[^\n]s", buf1);
+getchar();
+scanf("%[^\n]s", buf2);
+getchar();
+scanf("%[^\n]s", pattern);
+```
+
+
 
 #### fprintf(文件)
 
