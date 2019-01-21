@@ -3,7 +3,7 @@
 - 对结构体二级排序(使用sort时注意引入命名空间std)
 
 ```c++
-typedef  struct Node{
+typedef struct Node{
     int grade;
     int num;
 }Node;
