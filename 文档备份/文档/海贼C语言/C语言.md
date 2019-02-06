@@ -229,6 +229,14 @@ sscanf(str1, format, ...) 从字符串str1读入内容
 sprintf(str1, format, ...) 将内容输出到str1中
 ```
 
+#### 宏定义实现swap函数
+
+```c
+#define swap(x,y) { \
+	__typeof(x) __tmp = x; x = y; y = __tmp; \
+} \
+```
+
 
 
 ## 作业
